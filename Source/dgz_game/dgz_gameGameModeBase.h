@@ -15,5 +15,5 @@ class DGZ_GAME_API Adgz_gameGameModeBase : public AGameModeBase
 	
 	
 	
-	
+		virtual void StartPlay() override;
 };
