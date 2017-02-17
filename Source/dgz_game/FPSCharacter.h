@@ -38,6 +38,13 @@ public:
 	// 松开按键时清除跳跃标记。
 	UFUNCTION()
 		void StopJump();
+
+	// FPS 摄像机。
+	UPROPERTY(VisibleAnywhere)
+		UCameraComponent* FPSCameraComponent;
 	
+	// 第一人称模型（手臂），仅对拥有玩家可见。
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		USkeletalMeshComponent* FPSMesh;
 	
 };

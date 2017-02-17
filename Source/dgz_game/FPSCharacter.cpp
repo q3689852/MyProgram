@@ -10,6 +10,25 @@ AFPSCharacter::AFPSCharacter()
 	// 设置此角色每帧调用 Tick()。不需要时可将此关闭以提高性能。
 	PrimaryActorTick.bCanEverTick = true;
 
+	// 创建一个第一人称摄像机组件。
+	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	// 将摄像机组件附加到胶囊体组件。
+	FPSCameraComponent->AttachTo(GetCapsuleComponent());
+	// 将摄像机放置在眼睛上方不远处。
+	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 50.0f + BaseEyeHeight));
+	// 用 pawn 控制摄像机旋转。
+	FPSCameraComponent->bUsePawnControlRotation = true;
+
+	// 为拥有玩家创建一个第一人称模型组件。
+	FPSMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FirstPersonMesh"));
+	// 该模型仅对拥有玩家可见。
+	FPSMesh->SetOnlyOwnerSee(true);
+	// 将 FPS 模型添加到 FPS 摄像机。
+	FPSMesh->AttachTo(FPSCameraComponent);
+	// 禁用部分环境阴影，保留单一模型存在的假象。
+	FPSMesh->bCastDynamicShadow = false;
+	FPSMesh->CastShadow = false;
+
 }
 
 // 游戏开始时或生成时调用
@@ -48,6 +67,8 @@ void AFPSCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AFPSCharacter::StartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &AFPSCharacter::StopJump);
 
+	// 拥有玩家无法看到普通（第三人称）身体模型。
+	GetMesh()->SetOwnerNoSee(true);
 }
 
 void AFPSCharacter::MoveForward(float Value)
