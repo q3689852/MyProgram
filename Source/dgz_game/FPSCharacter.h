@@ -30,6 +30,14 @@ public:
 	// 处理左右移动的输入。
 	UFUNCTION()
 		void MoveRight(float Value);
+
+	// 按下按键时设置跳跃标记。
+	UFUNCTION()
+		void StartJump();
+
+	// 松开按键时清除跳跃标记。
+	UFUNCTION()
+		void StopJump();
 	
 	
 };

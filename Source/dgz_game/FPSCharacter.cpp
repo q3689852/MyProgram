@@ -44,6 +44,10 @@ void AFPSCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAxis("Turn", this, &AFPSCharacter::AddControllerYawInput);
 	InputComponent->BindAxis("LookUp", this, &AFPSCharacter::AddControllerPitchInput);
 
+	// 设置“动作”绑定。
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AFPSCharacter::StartJump);
+	InputComponent->BindAction("Jump", IE_Released, this, &AFPSCharacter::StopJump);
+
 }
 
 void AFPSCharacter::MoveForward(float Value)
@@ -58,4 +62,14 @@ void AFPSCharacter::MoveRight(float Value)
 	// 明确哪个方向是“向右”，并记录玩家试图向此方向移动。
 	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(Direction, Value);
+}
+
+void AFPSCharacter::StartJump()
+{
+	bPressedJump = true;
+}
+
+void AFPSCharacter::StopJump()
+{
+	bPressedJump = false;
 }
