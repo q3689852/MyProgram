@@ -39,6 +39,11 @@ void AFPSCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	// 设置“移动”绑定。
 	InputComponent->BindAxis("MoveForward", this, &AFPSCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AFPSCharacter::MoveRight);
+
+	// 设置“查看”绑定。
+	InputComponent->BindAxis("Turn", this, &AFPSCharacter::AddControllerYawInput);
+	InputComponent->BindAxis("LookUp", this, &AFPSCharacter::AddControllerPitchInput);
+
 }
 
 void AFPSCharacter::MoveForward(float Value)
