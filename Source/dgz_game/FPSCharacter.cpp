@@ -4,18 +4,19 @@
 #include "FPSCharacter.h"
 
 
-// Sets default values
+// 设置默认值
 AFPSCharacter::AFPSCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// 设置此角色每帧调用 Tick()。不需要时可将此关闭以提高性能。
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
+// 游戏开始时或生成时调用
 void AFPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
 	if (GEngine)
 	{
 		// 显示调试信息五秒。-1“键”值（首个参数）说明我们无需更新或刷新此消息。
@@ -23,17 +24,33 @@ void AFPSCharacter::BeginPlay()
 	}
 }
 
-// Called every frame
-void AFPSCharacter::Tick( float DeltaTime )
+// 每帧调用
+void AFPSCharacter::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 
 }
 
-// Called to bind functionality to input
-void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+// 调用后将功能绑定到输入
+void AFPSCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(InputComponent);
 
+	// 设置“移动”绑定。
+	InputComponent->BindAxis("MoveForward", this, &AFPSCharacter::MoveForward);
+	InputComponent->BindAxis("MoveRight", this, &AFPSCharacter::MoveRight);
 }
 
+void AFPSCharacter::MoveForward(float Value)
+{
+	// 明确哪个方向是“前进”，并记录玩家试图向此方向移动。
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(Direction, Value);
+}
+
+void AFPSCharacter::MoveRight(float Value)
+{
+	// 明确哪个方向是“向右”，并记录玩家试图向此方向移动。
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(Direction, Value);
+}

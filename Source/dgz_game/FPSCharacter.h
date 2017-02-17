@@ -23,6 +23,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// 处理前后移动的输入。
+	UFUNCTION()
+		void MoveForward(float Value);
+
+	// 处理左右移动的输入。
+	UFUNCTION()
+		void MoveRight(float Value);
 	
 	
 };
