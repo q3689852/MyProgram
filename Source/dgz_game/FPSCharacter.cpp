@@ -4,6 +4,7 @@
 #include "FPSCharacter.h"
 
 
+
 // 设置默认值
 AFPSCharacter::AFPSCharacter()
 {
@@ -66,6 +67,7 @@ void AFPSCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	// 设置“动作”绑定。
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AFPSCharacter::StartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &AFPSCharacter::StopJump);
+	InputComponent->BindAction("Fire", IE_Pressed, this, &AFPSCharacter::Fire);
 
 	// 拥有玩家无法看到普通（第三人称）身体模型。
 	GetMesh()->SetOwnerNoSee(true);
@@ -93,4 +95,7 @@ void AFPSCharacter::StartJump()
 void AFPSCharacter::StopJump()
 {
 	bPressedJump = false;
+}
+void AFPSCharacter::Fire()
+{
 }

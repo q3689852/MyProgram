@@ -39,6 +39,10 @@ public:
 	UFUNCTION()
 		void StopJump();
 
+	// 处理开火的函数。
+	UFUNCTION()
+		void Fire();
+
 	// FPS 摄像机。
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* FPSCameraComponent;
@@ -46,5 +50,13 @@ public:
 	// 第一人称模型（手臂），仅对拥有玩家可见。
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		USkeletalMeshComponent* FPSMesh;
+
+	// 从摄像机位置的枪口偏移。
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		FVector MuzzleOffset;
+
+	// 生成的发射物类。
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class AFPSProjectile> ProjectileClass;
 	
 };
