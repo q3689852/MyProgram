@@ -33,5 +33,6 @@ public:
 
 	// 在发射方向上设置发射物初速度的函数。
 	void FireInDirection(const FVector& ShootDirection);
-	
+
+
 };

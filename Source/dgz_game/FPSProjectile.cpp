@@ -9,7 +9,7 @@ AFPSProjectile::AFPSProjectile()
 {
 
 	// 3 秒后消亡。
-	InitialLifeSpan = 3.0f;
+	InitialLifeSpan = 10.0f;
 
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -17,6 +17,7 @@ AFPSProjectile::AFPSProjectile()
 	// 使用球体代表简单碰撞。
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
+
 	// 设置球体的碰撞半径。
 	CollisionComponent->InitSphereRadius(15.0f);
 	// 将碰撞组件设为根组件。
