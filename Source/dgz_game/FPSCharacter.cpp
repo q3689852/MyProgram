@@ -2,7 +2,7 @@
 
 #include "dgz_game.h"
 #include "FPSCharacter.h"
-
+#include "FPSProjectile.h"
 
 
 // 设置默认值
@@ -98,4 +98,33 @@ void AFPSCharacter::StopJump()
 }
 void AFPSCharacter::Fire()
 {
+	// 尝试发射物体。
+	if (ProjectileClass)
+	{
+		// 获取摄像机变换。
+		FVector CameraLocation;
+		FRotator CameraRotation;
+		GetActorEyesViewPoint(CameraLocation, CameraRotation);
+
+		// 将 MuzzleOffset 从摄像机空间变换到世界空间。
+		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
+		FRotator MuzzleRotation = CameraRotation;
+		// 将准星稍微上抬。
+		MuzzleRotation.Pitch += 10.0f;
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = Instigator;
+			// 在枪口处生成发射物。
+			AFPSProjectile* Projectile = World->SpawnActor<AFPSProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (Projectile)
+			{
+				// 设置发射物的初始轨道。
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				Projectile->FireInDirection(LaunchDirection);
+			}
+		}
+	}
 }
