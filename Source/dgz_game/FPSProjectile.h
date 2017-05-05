@@ -34,5 +34,8 @@ public:
 	// 在发射方向上设置发射物初速度的函数。
 	void FireInDirection(const FVector& ShootDirection);
 
+	// 发射物命中物体时调用的函数。
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 };
