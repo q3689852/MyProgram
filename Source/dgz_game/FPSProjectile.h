@@ -5,6 +5,8 @@
 #include "GameFramework/Actor.h"
 #include "FPSProjectile.generated.h"
 
+
+
 UCLASS()
 class DGZ_GAME_API AFPSProjectile : public AActor
 {
@@ -18,6 +20,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 
 public:	
 	// Called every frame
